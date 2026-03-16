@@ -20,6 +20,6 @@ public class Company {
 
   public void addChildCompany(Company child) {
     this.childCompanyNames.add(child.name);
-    child.parentCompanyName = Optional.of(child.name);
+    child.parentCompanyName = Optional.of(this.name);
   }
 }
