@@ -16,7 +16,7 @@ public class CompanyRepository {
     storage.put(company.name, company);
   }
 
-  public Company getCompanyById(String name) {
+  public Company getCompanyByName(String name) {
     var company = storage.get(name);
 
     if (company == null) {
