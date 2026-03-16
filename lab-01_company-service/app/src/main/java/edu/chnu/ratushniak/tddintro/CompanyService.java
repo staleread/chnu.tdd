@@ -11,11 +11,19 @@ public class CompanyService implements ICompanyService {
 
   @Override
   public Optional<Company> getTopLevelParentByName(String childName) {
+    if (childName == null) {
+      throw new IllegalArgumentException();
+    }
+
     throw new UnsupportedOperationException();
   }
 
   @Override
   public long getTotalEmployeesCountByName(String companyName) {
+    if (companyName == null) {
+      throw new IllegalArgumentException();
+    }
+
     throw new UnsupportedOperationException();
   }
 }
