@@ -29,6 +29,31 @@ public class CompanyServiceTest {
   }
 
   @Test
+  public void getTopLevelParent_noParent() {
+    Company company = new Company("Standalone", 100);
+
+    repository.addCompany(company);
+
+    Optional<Company> result = service.getTopLevelParentByName("Standalone");
+
+    assertFalse(result.isPresent());
+  }
+
+  @Test(expected = IllegalStateException.class, timeout = 1000)
+  public void getTopLevelParent_parentLoop() {
+    Company a = new Company("A", 10);
+    Company b = new Company("B", 20);
+
+    repository.addCompany(a);
+    repository.addCompany(b);
+
+    a.addChildCompany(b);
+    b.addChildCompany(a);
+
+    service.getTopLevelParentByName("A");
+  }
+
+  @Test
   public void getTopLevelParent_singleChildHierarchy() {
     Company parent = new Company("Parent", 100);
     Company child = new Company("Child", 50);
