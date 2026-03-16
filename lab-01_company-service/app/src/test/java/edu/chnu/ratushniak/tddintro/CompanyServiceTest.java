@@ -19,17 +19,17 @@ public class CompanyServiceTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void getTopLevelParent_nullName() {
+  public void GivenNullName_WhenGetTopLevelParent_ThenThrowsIllegalArgument() {
     service.getTopLevelParentByName(null);
   }
 
   @Test(expected = NoSuchElementException.class)
-  public void getTopLevelParent_companyNotFound() {
+  public void GivenUnknownName_WhenGetTopLevelParent_ThenThrowsNoSuchElement() {
     service.getTopLevelParentByName("Unknown");
   }
 
   @Test
-  public void getTopLevelParent_noParent() {
+  public void GivenCompanyWithNoParent_WhenGetTopLevelParent_ThenReturnsEmptyOptional() {
     Company company = new Company("Standalone", 100);
 
     repository.addCompany(company);
@@ -40,7 +40,7 @@ public class CompanyServiceTest {
   }
 
   @Test(expected = IllegalStateException.class, timeout = 1000)
-  public void getTopLevelParent_parentLoop() {
+  public void GivenParentCycle_WhenGetTopLevelParent_ThenThrowsIllegalState() {
     Company a = new Company("A", 10);
     Company b = new Company("B", 20);
 
@@ -54,7 +54,7 @@ public class CompanyServiceTest {
   }
 
   @Test
-  public void getTopLevelParent_singleChildHierarchy() {
+  public void GivenSingleChildHierarchy_WhenGetTopLevelParent_ThenReturnsParent() {
     Company parent = new Company("Parent", 100);
     Company child = new Company("Child", 50);
 
@@ -70,7 +70,7 @@ public class CompanyServiceTest {
   }
 
   @Test
-  public void getTopLevelParent_multipleLevelsHierarchy() {
+  public void GivenMultiLevelHierarchy_WhenGetTopLevelParent_ThenReturnsRoot() {
     Company root = new Company("Root", 200);
     Company mid = new Company("Mid", 100);
     Company leaf = new Company("Leaf", 50);
@@ -89,7 +89,7 @@ public class CompanyServiceTest {
   }
 
   @Test
-  public void totalEmployees_singleCompany() {
+  public void GivenSingleCompany_WhenGetTotalEmployees_ThenReturnsOwnCount() {
     Company company = new Company("Company", 100);
 
     repository.addCompany(company);
@@ -100,7 +100,7 @@ public class CompanyServiceTest {
   }
 
   @Test
-  public void totalEmployees_singleChild() {
+  public void GivenOneChild_WhenGetTotalEmployees_ThenReturnsSumOfBoth() {
     Company parent = new Company("Parent", 100);
     Company child = new Company("Child", 50);
 
@@ -115,7 +115,7 @@ public class CompanyServiceTest {
   }
 
   @Test
-  public void totalEmployees_multipleChildren() {
+  public void GivenMultipleChildren_WhenGetTotalEmployees_ThenReturnsSumOfAll() {
     Company parent = new Company("Parent", 100);
     Company child1 = new Company("Child1", 50);
     Company child2 = new Company("Child2", 30);
@@ -133,7 +133,7 @@ public class CompanyServiceTest {
   }
 
   @Test
-  public void totalEmployees_multipleLevels() {
+  public void GivenMultiLevelHierarchy_WhenGetTotalEmployees_ThenReturnsSumOfAllLevels() {
     Company root = new Company("Root", 200);
     Company mid = new Company("Mid", 100);
     Company leaf = new Company("Leaf", 50);
@@ -151,7 +151,7 @@ public class CompanyServiceTest {
   }
 
   @Test
-  public void totalEmployees_zeroEmployees() {
+  public void GivenCompanyWithZeroEmployees_WhenGetTotalEmployees_ThenReturnsChildCount() {
     Company root = new Company("Root", 0);
     Company child = new Company("Child", 10);
 
@@ -166,12 +166,12 @@ public class CompanyServiceTest {
   }
 
   @Test(expected = NoSuchElementException.class)
-  public void totalEmployees_companyNotFound() {
+  public void GivenUnknownName_WhenGetTotalEmployees_ThenThrowsNoSuchElement() {
     service.getTotalEmployeesCountByName("Unknown");
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void totalEmployees_nullName() {
+  public void GivenNullName_WhenGetTotalEmployees_ThenThrowsIllegalArgument() {
     service.getTotalEmployeesCountByName(null);
   }
 }
